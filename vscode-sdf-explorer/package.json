@@ -1,0 +1,91 @@
+{
+  "name": "sdf-explorer",
+  "displayName": "SDF Explorer",
+  "description": "Visualize SAGER .sdf files as a tree structure in VS Code.",
+  "version": "0.0.1",
+  "publisher": "meetjethwa",
+  "repository": {
+    "type": "git",
+    "url": "https://example.com/meetjethwa/sdf-explorer"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "files": [
+    "extension.js",
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "resources/**"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:sdfExplorer",
+    "onCommand:sdfExplorer.openFile",
+    "onCommand:sdfExplorer.refresh"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "sdfExplorer.openFile",
+        "title": "SDF Explorer: Open SDF File"
+      },
+      {
+        "command": "sdfExplorer.refresh",
+        "title": "SDF Explorer: Refresh"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sdfExplorerContainer",
+          "title": "SDF",
+          "icon": "resources/sdf.svg"
+        }
+      ]
+    },
+    "views": {
+      "sdfExplorerContainer": [
+        {
+          "id": "sdfExplorer",
+          "name": "SDF Explorer"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "sdfExplorer.openFile",
+          "when": "view == sdfExplorer",
+          "group": "navigation"
+        },
+        {
+          "command": "sdfExplorer.refresh",
+          "when": "view == sdfExplorer",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "sdfExplorer.openFile",
+          "when": "resourceExtname == .sdf",
+          "group": "navigation"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "sdf",
+        "aliases": [
+          "SDF"
+        ],
+        "extensions": [
+          ".sdf"
+        ]
+      }
+    ]
+  }
+}

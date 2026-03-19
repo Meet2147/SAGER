@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="512" viewBox="0 0 384 512">
+  <defs>
+    <linearGradient id="sheet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbfdfd"/>
+      <stop offset="100%" stop-color="#e5f2ed"/>
+    </linearGradient>
+  </defs>
+  <path d="M70 20h170l94 94v326c0 29-23 52-52 52H70c-29 0-52-23-52-52V72c0-29 23-52 52-52z" fill="url(#sheet)" stroke="#1d3344" stroke-width="12"/>
+  <path d="M240 20v66c0 16 12 28 28 28h66" fill="none" stroke="#1d3344" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="102" cy="178" r="20" fill="#0f7661"/>
+  <circle cx="238" cy="162" r="20" fill="#3d6fb3"/>
+  <circle cx="170" cy="254" r="20" fill="#de8457"/>
+  <path d="M102 178l136-16-68 92-68-76z" fill="none" stroke="#1d3344" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="44" y="346" width="222" height="88" rx="24" fill="#c93f3f"/>
+  <text x="155" y="408" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="76" font-weight="700" fill="#f7fbff">SDF</text>
+</svg>

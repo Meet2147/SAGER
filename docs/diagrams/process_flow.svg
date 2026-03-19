@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="1120" viewBox="0 0 940 1120">
+  <style>
+    .box { fill:#f7f2ea; stroke:#1f3342; stroke-width:2; rx:12; ry:12; }
+    .decision { fill:#dceee5; stroke:#1f3342; stroke-width:2; }
+    .warn { fill:#f7dfd3; stroke:#1f3342; stroke-width:2; rx:12; ry:12; }
+    .t { font: 16px Helvetica, Arial, sans-serif; fill:#1f3342; }
+    .line { stroke:#1f3342; stroke-width:2; fill:none; marker-end:url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0,0 10,4 0,8" fill="#1f3342"/>
+    </marker>
+  </defs>
+  <rect width="940" height="1120" fill="#fffdf9"/>
+  <g transform="translate(270,30)">
+    <rect class="box" width="400" height="54"/><text class="t" x="120" y="34">Receive document</text>
+    <path class="line" d="M200 54 V86"/>
+    <rect class="box" y="86" width="400" height="54"/><text class="t" x="58" y="120">Run OCR, layout, VLM, and table parsers</text>
+    <path class="line" d="M200 140 V172"/>
+    <rect class="box" y="172" width="400" height="54"/><text class="t" x="55" y="206">Normalize parser outputs into evidence atoms</text>
+    <path class="line" d="M200 226 V258"/>
+    <rect class="box" y="258" width="400" height="54"/><text class="t" x="36" y="292">Add metadata: coordinates, role, confidence, provenance</text>
+    <path class="line" d="M200 312 V344"/>
+    <rect class="box" y="344" width="400" height="54"/><text class="t" x="100" y="378">Construct evidence graph</text>
+    <path class="line" d="M200 398 V430"/>
+    <rect class="box" y="430" width="400" height="54"/><text class="t" x="57" y="464">Build semantic, structural, and spatial indexes</text>
+    <path class="line" d="M200 484 V516"/>
+    <rect class="box" y="516" width="400" height="54"/><text class="t" x="109" y="550">Receive task input</text>
+    <path class="line" d="M200 570 V602"/>
+    <rect class="box" y="602" width="400" height="54"/><text class="t" x="43" y="636">Predict task type and evidence requirements</text>
+    <path class="line" d="M200 656 V688"/>
+    <rect class="box" y="688" width="400" height="54"/><text class="t" x="92" y="722">Generate context program</text>
+    <path class="line" d="M200 742 V774"/>
+    <rect class="box" y="774" width="400" height="54"/><text class="t" x="78" y="808">Retrieve and traverse evidence graph</text>
+    <path class="line" d="M200 828 V860"/>
+    <rect class="box" y="860" width="400" height="54"/><text class="t" x="91" y="894">Generate answer or extraction</text>
+    <path class="line" d="M200 914 V946"/>
+    <polygon class="decision" points="200,946 330,1006 200,1066 70,1006"/>
+    <text class="t" x="116" y="1000">Adequate support?</text>
+    <path class="line" d="M330 1006 H460"/>
+    <rect class="warn" x="460" y="979" width="230" height="54"/><text class="t" x="491" y="1013">Reprocess uncertain regions</text>
+    <path class="line" d="M575 979 V455 H400"/>
+    <path class="line" d="M200 1066 V1094"/>
+    <rect class="box" y="1094" width="400" height="54"/><text class="t" x="100" y="1128">Return supported output</text>
+  </g>
+</svg>

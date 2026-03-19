@@ -1,0 +1,17 @@
+flowchart LR
+    A["Input Documents"] --> B["Multi-Parser Ingestion"]
+    B --> C["Evidence Atom Normalizer"]
+    C --> D["Evidence Graph Builder"]
+    D --> E["Multi-Resolution Index Manager"]
+    Q["Task Input / Query"] --> F["Query Router"]
+    F --> G["Context Assembly Program"]
+    E --> H["Graph + Semantic Retrieval"]
+    G --> H
+    H --> I["Task-Specific Context Set"]
+    I --> J["Generator / Extractor"]
+    J --> K["Verification Engine"]
+    K --> L["Answer / JSON / Audit Trail"]
+    K --> M{"Support weak?"}
+    M -- "Yes" --> N["Selective Region Reprocessing"]
+    N --> C
+    M -- "No" --> L

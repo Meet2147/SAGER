@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="720" viewBox="0 0 1180 720">
+  <style>
+    .card { fill:#f8f4ed; stroke:#223445; stroke-width:2; rx:14; ry:14; }
+    .head { fill:#dceee5; }
+    .txt { font: 15px Helvetica, Arial, sans-serif; fill:#223445; }
+    .line { stroke:#223445; stroke-width:2; fill:none; marker-end:url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0,0 10,4 0,8" fill="#223445"/>
+    </marker>
+  </defs>
+  <rect width="1180" height="720" fill="#fffdf9"/>
+  <g transform="translate(40,40)">
+    <g>
+      <rect class="card head" width="220" height="42"/><rect class="card" y="42" width="220" height="120"/>
+      <text class="txt" x="78" y="27">Document</text>
+      <text class="txt" x="18" y="76">id</text><text class="txt" x="18" y="106">metadata</text><text class="txt" x="18" y="136">source_uri</text>
+    </g>
+    <g transform="translate(300,0)">
+      <rect class="card head" width="220" height="42"/><rect class="card" y="42" width="220" height="120"/>
+      <text class="txt" x="98" y="27">Page</text>
+      <text class="txt" x="18" y="76">page_number</text><text class="txt" x="18" y="106">width</text><text class="txt" x="18" y="136">height</text>
+    </g>
+    <g transform="translate(600,0)">
+      <rect class="card head" width="220" height="42"/><rect class="card" y="42" width="220" height="120"/>
+      <text class="txt" x="74" y="27">ParserRun</text>
+      <text class="txt" x="18" y="76">parser_type</text><text class="txt" x="18" y="106">parser_version</text><text class="txt" x="18" y="136">confidence_profile</text>
+    </g>
+    <g transform="translate(300,250)">
+      <rect class="card head" width="280" height="42"/><rect class="card" y="42" width="280" height="180"/>
+      <text class="txt" x="82" y="27">EvidenceAtom</text>
+      <text class="txt" x="18" y="76">atom_id</text><text class="txt" x="18" y="104">atom_type</text><text class="txt" x="18" y="132">content</text>
+      <text class="txt" x="18" y="160">coordinates</text><text class="txt" x="18" y="188">reading_order</text><text class="txt" x="18" y="216">confidence</text>
+    </g>
+    <g transform="translate(660,280)">
+      <rect class="card head" width="200" height="42"/><rect class="card" y="42" width="200" height="96"/>
+      <text class="txt" x="86" y="27">Edge</text>
+      <text class="txt" x="18" y="76">edge_type</text><text class="txt" x="18" y="106">weight</text>
+    </g>
+    <g transform="translate(40,480)">
+      <rect class="card head" width="260" height="42"/><rect class="card" y="42" width="260" height="126"/>
+      <text class="txt" x="62" y="27">ContextProgram</text>
+      <text class="txt" x="18" y="76">task_type</text><text class="txt" x="18" y="104">traversal_policy</text><text class="txt" x="18" y="132">ranking_policy</text>
+    </g>
+    <g transform="translate(400,480)">
+      <rect class="card head" width="260" height="42"/><rect class="card" y="42" width="260" height="126"/>
+      <text class="txt" x="62" y="27">SupportSubgraph</text>
+      <text class="txt" x="18" y="76">support_score</text><text class="txt" x="18" y="104">consistency_score</text><text class="txt" x="18" y="132">provenance_score</text>
+    </g>
+    <path class="line" d="M220 81 H300"/>
+    <path class="line" d="M520 140 V250"/>
+    <path class="line" d="M710 162 V250 H580"/>
+    <path class="line" d="M580 361 H660"/>
+    <path class="line" d="M300 543 H400"/>
+    <path class="line" d="M530 480 V430"/>
+  </g>
+</svg>

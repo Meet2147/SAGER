@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>method_explainer.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="method-explainer">Method Explainer</h1>
+<h2 id="title">Title</h2>
+<p>Adaptive Evidence-Graph Retrieval for Structure-Aware Document Intelligence</p>
+<p><strong>Method name:</strong> SAGER<br>
+<strong>Expanded form:</strong> Structure-Aware Graph Evidence Retrieval</p>
+<h2 id="purpose-of-this-document">Purpose of this document</h2>
+<p>This file explains:</p>
+<ul>
+<li>what our experiment was trying to prove</li>
+<li>what the main method is</li>
+<li>how the system flow works step by step</li>
+<li>what the important terms mean</li>
+<li>what level of granularity our evidence graph uses</li>
+</ul>
+<h2 id="1-what-our-experiment-was-about">1. What our experiment was about</h2>
+<p>The goal of our experiment was to test whether <strong>evidence-graph retrieval</strong> is a better foundation for document intelligence than plain flat chunking.</p>
+<p>Most document AI systems still do something like this:</p>
+<ol>
+<li>extract text from a PDF</li>
+<li>split the text into chunks</li>
+<li>run vector search or RAG over those chunks</li>
+</ol>
+<p>That works sometimes, but it often breaks when documents contain:</p>
+<ul>
+<li>headings</li>
+<li>tables</li>
+<li>footnotes</li>
+<li>figures</li>
+<li>citations</li>
+<li>multi-page context</li>
+<li>long documents with mixed structure</li>
+</ul>
+<p>So our experiment asked:</p>
+<p><strong>Can we represent documents as smaller evidence units with structure, then retrieve over those units more intelligently than basic chunking?</strong></p>
+<h2 id="11-what-this-method-is-not">1.1 What this method is not</h2>
+<p>This method is <strong>not</strong> a keyword-based extraction pipeline.</p>
+<p>It is also <strong>not</strong>:</p>
+<ul>
+<li>a plain keyword matching system</li>
+<li>a fixed chunk retrieval system</li>
+<li>a naive RAG pipeline over raw text blocks</li>
+</ul>
+<p>Even though some prototype components used heuristic or lexical signals, the actual method is not conceptually based on keyword extraction.</p>
+<p>The core of the method is:</p>
+<ul>
+<li>semantic retrieval over evidence atoms</li>
+<li>structure-aware ranking</li>
+<li>graph-assisted context expansion</li>
+<li>support-linked evidence assembly</li>
+</ul>
+<h2 id="2-what-our-main-method-is">2. What our main method is</h2>
+<p>Our method is:</p>
+<p><strong>Adaptive Evidence-Graph Retrieval for Structure-Aware Document Intelligence</strong></p>
+<p>We call the method:</p>
+<p><strong>SAGER</strong> = <strong>Structure-Aware Graph Evidence Retrieval</strong></p>
+<p>The main idea is:</p>
+<ul>
+<li>do not treat the document as one long text stream</li>
+<li>do not rely only on fixed chunks</li>
+<li>break the document into smaller <strong>evidence atoms</strong></li>
+<li>connect these atoms using lightweight structure</li>
+<li>retrieve the best evidence plus its local neighborhood</li>
+<li>return support-linked results instead of isolated text matches</li>
+</ul>
+<p>In simple words:</p>
+<p>Instead of saying:</p>
+<blockquote>
+<p>&quot;Give me the best chunk&quot;</p>
+</blockquote>
+<p>our method says:</p>
+<blockquote>
+<p>&quot;Find the most relevant evidence units, understand their local structure, connect them, and return supported context.&quot;</p>
+</blockquote>
+<p>That is why <strong>evidence-graph retrieval</strong> is the right conceptual name, and <strong>SAGER</strong> is the formal method name we use for the system.</p>
+<h2 id="3-core-terminologies">3. Core terminologies</h2>
+<h2 id="31-what-is-an-evidence-atom">3.1 What is an evidence atom?</h2>
+<p>An <strong>evidence atom</strong> is the smallest usable retrieval unit in our system.</p>
+<p>In the current prototype, an atom is usually close to a <strong>line-level</strong> or <strong>short span-level</strong> extracted unit from a page.</p>
+<p>An atom stores information such as:</p>
+<ul>
+<li><code>doc_id</code></li>
+<li><code>page</code></li>
+<li><code>text</code></li>
+<li><code>reading_order</code></li>
+<li><code>parser_source</code></li>
+<li><code>confidence</code></li>
+<li><code>atom_type</code></li>
+<li><code>role_label</code></li>
+</ul>
+<p>Examples of atoms:</p>
+<ul>
+<li>a heading line</li>
+<li>a sentence-like extracted line</li>
+<li>a footnote line</li>
+<li>a caption line</li>
+<li>a table-like row</li>
+</ul>
+<p>Important:</p>
+<p>An atom is <strong>not word-specific</strong> in our current method.</p>
+<p>It is usually closer to:</p>
+<ul>
+<li>a line</li>
+<li>a phrase</li>
+<li>a sentence fragment</li>
+<li>a short document unit</li>
+</ul>
+<p>So the atom granularity is <strong>smaller than chunking, but larger than individual words</strong>.</p>
+<h2 id="32-what-is-an-evidence-graph">3.2 What is an evidence graph?</h2>
+<p>An <strong>evidence graph</strong> is a graph where:</p>
+<ul>
+<li>nodes are evidence atoms</li>
+<li>edges represent relationships between atoms</li>
+</ul>
+<p>In the current prototype, the graph is lightweight. It mainly includes:</p>
+<ul>
+<li><strong>adjacency edges</strong>
+Meaning one atom comes before or after another in reading order</li>
+<li><strong>containment edges</strong>
+Meaning a heading is connected to the content that follows it</li>
+</ul>
+<p>So the graph is currently <strong>atom-specific</strong>, not word-specific.</p>
+<p>The graph is also not purely sentence-specific in a strict NLP sense, because the extracted units are based on PDF text structure and line-level parsing, not perfect sentence segmentation.</p>
+<p>A better way to say it is:</p>
+<p><strong>The evidence graph is built over small document evidence units, roughly line/span level, with document-structure relationships.</strong></p>
+<h2 id="33-what-is-context">3.3 What is context?</h2>
+<p><strong>Context</strong> is the set of evidence atoms that the system assembles for a given query.</p>
+<p>Context is not just “top matching text.”</p>
+<p>It is the result of:</p>
+<ul>
+<li>semantic ranking</li>
+<li>atom selection</li>
+<li>graph expansion</li>
+<li>support assembly</li>
+</ul>
+<p>So context means:</p>
+<blockquote>
+<p>the set of evidence units and nearby supporting units that the system believes are sufficient to answer the query</p>
+</blockquote>
+<h2 id="34-what-is-a-context-program">3.4 What is a context program?</h2>
+<p>A <strong>context program</strong> is the retrieval policy used for one query.</p>
+<p>It decides things like:</p>
+<ul>
+<li>what kind of query this is</li>
+<li>which atoms to prioritize</li>
+<li>which graph edges to expand</li>
+<li>how many hops to expand</li>
+<li>what support checks to apply</li>
+</ul>
+<p>So it is like a small retrieval strategy selected at query time.</p>
+<h2 id="35-what-is-structure-aware-retrieval">3.5 What is structure-aware retrieval?</h2>
+<p>Structure-aware retrieval means the system is not blind to the type of text it is searching.</p>
+<p>It knows that:</p>
+<ul>
+<li>a heading is different from body text</li>
+<li>a footnote is different from a title</li>
+<li>a caption is different from a paragraph</li>
+<li>a table row is different from a citation</li>
+</ul>
+<p>That helps it retrieve more grounded evidence.</p>
+<h2 id="36-what-is-support-linked-retrieval">3.6 What is support-linked retrieval?</h2>
+<p>Support-linked retrieval means the returned answer or document hit is tied back to:</p>
+<ul>
+<li>supporting atom ids</li>
+<li>supporting pages</li>
+<li>supporting evidence text</li>
+</ul>
+<p>So the result is inspectable.</p>
+<p>That is one of the main strengths of our approach.</p>
+<h2 id="4-is-our-evidence-graph-word-specific-sentence-specific-or-chunk-specific">4. Is our evidence graph word-specific, sentence-specific, or chunk-specific?</h2>
+<p>This is an important question.</p>
+<p>The answer is:</p>
+<p><strong>It is primarily atom-specific, where atoms are line/span-level evidence units.</strong></p>
+<p>That means:</p>
+<ul>
+<li>not word-specific</li>
+<li>not classical sentence-specific</li>
+<li>not large chunk-specific either</li>
+</ul>
+<p>More precisely:</p>
+<ul>
+<li>words are too small and too noisy for our current graph</li>
+<li>large chunks are too coarse and lose structure</li>
+<li>atoms are meant to be a middle layer: fine-grained enough for evidence, but large enough to be meaningful</li>
+</ul>
+<p>So the graph granularity is:</p>
+<p><strong>fine-grained document evidence units</strong></p>
+<p>In future versions, atoms could become more sophisticated, such as:</p>
+<ul>
+<li>sentence atoms</li>
+<li>table-cell atoms</li>
+<li>figure-caption atoms</li>
+<li>citation atoms</li>
+<li>clause atoms</li>
+<li>region atoms</li>
+</ul>
+<p>But in the current prototype they are mostly line-level evidence units enriched with structure labels.</p>
+<h2 id="5-full-system-flow">5. Full system flow</h2>
+<h2 id="step-1-receive-the-pdf">Step 1: Receive the PDF</h2>
+<p>A document enters the system.</p>
+<h2 id="step-2-extract-text-page-by-page">Step 2: Extract text page by page</h2>
+<p>We extract content from each page while preserving:</p>
+<ul>
+<li>page identity</li>
+<li>reading order</li>
+<li>source provenance</li>
+</ul>
+<p>At this stage, the document is still raw extracted material.</p>
+<h2 id="step-3-create-evidence-atoms">Step 3: Create evidence atoms</h2>
+<p>The extracted content is split into small units called evidence atoms.</p>
+<p>Each atom becomes an object in the system.</p>
+<p>This is a major difference from plain chunking.</p>
+<p>Instead of one long body of text, we now have a set of smaller evidence units.</p>
+<h2 id="step-4-normalize-atoms-and-infer-structure">Step 4: Normalize atoms and infer structure</h2>
+<p>Each atom is enriched with labels such as:</p>
+<ul>
+<li><code>heading</code></li>
+<li><code>footnote</code></li>
+<li><code>citation</code></li>
+<li><code>table_caption</code></li>
+<li><code>figure_caption</code></li>
+<li><code>table_row</code></li>
+<li><code>body</code></li>
+</ul>
+<p>This makes the document representation more meaningful.</p>
+<h2 id="step-5-build-the-evidence-graph">Step 5: Build the evidence graph</h2>
+<p>Atoms are connected using lightweight relationships:</p>
+<ul>
+<li>adjacency</li>
+<li>containment</li>
+</ul>
+<p>This creates local structure around the evidence.</p>
+<h2 id="step-6-build-the-persistent-corpus-index">Step 6: Build the persistent corpus index</h2>
+<p>We build:</p>
+<ul>
+<li>a document-level semantic index</li>
+<li>an atom-level semantic index</li>
+<li>metadata for support inspection</li>
+</ul>
+<p>This is what allows repeated queries over the corpus without rebuilding everything from scratch.</p>
+<h2 id="step-7-receive-a-user-query">Step 7: Receive a user query</h2>
+<p>Examples:</p>
+<ul>
+<li><code>humanitarian data governance</code></li>
+<li><code>data responsibility guidelines</code></li>
+<li><code>table revenue amount</code></li>
+<li><code>figure results confidence</code></li>
+</ul>
+<h2 id="step-8-build-a-context-program">Step 8: Build a context program</h2>
+<p>The system decides how to retrieve for this query.</p>
+<p>It determines:</p>
+<ul>
+<li>what kind of query this is</li>
+<li>which evidence types matter</li>
+<li>how much graph expansion to use</li>
+</ul>
+<h2 id="step-9-rank-candidate-documents">Step 9: Rank candidate documents</h2>
+<p>The system uses the persistent semantic index to find promising documents.</p>
+<p>This is not a keyword-only search stage.</p>
+<p>It is a semantic evidence-retrieval stage.</p>
+<h2 id="step-10-rank-candidate-atoms">Step 10: Rank candidate atoms</h2>
+<p>Inside those documents, the system finds the most relevant atoms.</p>
+<h2 id="step-11-expand-context-through-the-graph">Step 11: Expand context through the graph</h2>
+<p>The system adds nearby or connected evidence atoms based on graph relationships.</p>
+<p>This helps avoid isolated retrieval and adds supporting local structure.</p>
+<h2 id="step-12-produce-a-support-linked-result">Step 12: Produce a support-linked result</h2>
+<p>The system returns:</p>
+<ul>
+<li>top document hits</li>
+<li>support atom ids</li>
+<li>supporting pages</li>
+<li>evidence text snippet</li>
+</ul>
+<h2 id="step-13-verify-support">Step 13: Verify support</h2>
+<p>The system checks whether the result is sufficiently supported.</p>
+<p>In the current prototype, this is support-presence verification rather than full truth verification.</p>
+<h2 id="step-14-reprocess-if-support-is-weak">Step 14: Reprocess if support is weak</h2>
+<p>The architecture supports selective reprocessing of uncertain regions.</p>
+<p>This is more of an architectural capability right now than a fully developed module, but it is an important part of the method.</p>
+<h2 id="6-why-this-method-is-stronger-than-plain-chunking">6. Why this method is stronger than plain chunking</h2>
+<p>Plain chunking has these problems:</p>
+<ul>
+<li>it loses structure</li>
+<li>it mixes headings and body text together</li>
+<li>it hides provenance</li>
+<li>it makes support inspection harder</li>
+<li>it often retrieves context that is too broad or too coarse</li>
+</ul>
+<p>Our method improves this because:</p>
+<ul>
+<li>evidence units are smaller and more precise</li>
+<li>structure is preserved</li>
+<li>graph neighbors can be added for support</li>
+<li>outputs are linked to evidence atoms</li>
+<li>retrieval is more inspectable</li>
+</ul>
+<h2 id="61-why-this-is-not-keyword-based-extraction">6.1 Why this is not keyword-based extraction</h2>
+<p>Keyword-based extraction usually means:</p>
+<ul>
+<li>detect a word or phrase</li>
+<li>pull nearby text</li>
+<li>treat that local match as the result</li>
+</ul>
+<p>That is not what our method does.</p>
+<p>Our method instead:</p>
+<ul>
+<li>represents the document as evidence atoms</li>
+<li>semantically ranks candidate evidence</li>
+<li>uses structure labels such as heading, footnote, caption, and table row</li>
+<li>expands through graph relationships</li>
+<li>assembles support-linked context</li>
+</ul>
+<p>So the correct framing is:</p>
+<p><strong>This is evidence-graph retrieval, not keyword-based extraction.</strong></p>
+<h2 id="7-what-our-experiment-proved">7. What our experiment proved</h2>
+<p>The experiment showed that:</p>
+<ul>
+<li>a large noisy PDF corpus can be processed into reusable evidence artifacts</li>
+<li>structure-aware atoms are practical</li>
+<li>persistent semantic indexing works over the corpus</li>
+<li>support-linked evidence retrieval works</li>
+<li>the architecture outperformed a simpler lexical baseline on representative queries</li>
+</ul>
+<h2 id="8-what-our-experiment-did-not-prove">8. What our experiment did not prove</h2>
+<p>The experiment did not yet prove:</p>
+<ul>
+<li>state-of-the-art document intelligence</li>
+<li>strong multimodal layout-native parsing</li>
+<li>legal- or finance-specialized precision</li>
+<li>benchmark superiority over strong modern RAG systems</li>
+</ul>
+<p>So the honest conclusion is:</p>
+<p><strong>The experiment validated the architecture and method direction, but not the final production-grade system.</strong></p>
+<h2 id="9-short-summary">9. Short summary</h2>
+<p>If someone asks what our method is in one paragraph:</p>
+<blockquote>
+<p>Our method represents documents as small evidence atoms instead of large chunks, connects those atoms into a lightweight evidence graph, and retrieves structure-aware context from that graph using persistent semantic indexing. This makes document retrieval more grounded, more inspectable, and more suitable for complex documents than plain chunk-based retrieval.</p>
+</blockquote>
+<p>An even shorter version is:</p>
+<blockquote>
+<p>Our method is an evidence-graph retrieval system that semantically retrieves structure-aware evidence units, expands through lightweight document relationships, and returns support-linked context rather than relying on keywords or large fixed chunks.</p>
+</blockquote>
+
+</body>
+</html>

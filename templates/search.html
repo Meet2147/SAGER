@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DocIntelligence Search</title>
+    <style>
+      :root {
+        --bg: #f7f3eb;
+        --panel: #fffdf8;
+        --ink: #223445;
+        --muted: #62727f;
+        --accent: #0e7c66;
+        --border: #d9d3c8;
+      }
+      body {
+        margin: 0;
+        font-family: "Iowan Old Style", "Palatino Linotype", serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, #e3efe8 0, transparent 34%),
+          radial-gradient(circle at top right, #f0dfd4 0, transparent 28%),
+          var(--bg);
+      }
+      .shell {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 40px 20px 80px;
+      }
+      .hero {
+        margin-bottom: 24px;
+      }
+      .hero h1 {
+        margin: 0;
+        font-size: 44px;
+      }
+      .hero p {
+        color: var(--muted);
+        max-width: 720px;
+        font-size: 18px;
+      }
+      .search {
+        display: grid;
+        grid-template-columns: 1fr 120px;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      input, button {
+        border-radius: 14px;
+        border: 1px solid var(--border);
+        padding: 16px 18px;
+        font-size: 17px;
+      }
+      button {
+        background: var(--accent);
+        color: white;
+        border: 0;
+        cursor: pointer;
+      }
+      .stats, .results, .detail {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 18px 20px;
+        box-shadow: 0 12px 28px rgba(34, 52, 69, 0.06);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.6fr) minmax(320px, 0.9fr);
+        gap: 18px;
+      }
+      .hit {
+        border-top: 1px solid var(--border);
+        padding: 14px 0;
+      }
+      .hit:first-child {
+        border-top: 0;
+        padding-top: 0;
+      }
+      .meta, .labels {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .labels span {
+        display: inline-block;
+        margin: 4px 6px 0 0;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #eef3ef;
+      }
+      .support {
+        margin-top: 12px;
+        font-size: 14px;
+      }
+      .support li {
+        margin-bottom: 10px;
+      }
+      @media (max-width: 860px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .search {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <h1>Evidence Graph Search</h1>
+        <p>Search the processed PDF corpus, inspect support atoms, and review how the prototype grounds each result.</p>
+      </section>
+
+      <div class="search">
+        <input id="query" value="humanitarian data" />
+        <button id="run">Search</button>
+      </div>
+
+      <div class="grid">
+        <section class="results">
+          <div id="stats" class="stats">Loading corpus stats...</div>
+          <div id="hits"></div>
+        </section>
+
+        <aside class="detail">
+          <h2 id="detail-title">Document detail</h2>
+          <div id="detail-body" class="meta">Run a search and click a result to inspect its support atoms.</div>
+        </aside>
+      </div>
+    </div>
+
+    <script>
+      const statsEl = document.getElementById("stats");
+      const hitsEl = document.getElementById("hits");
+      const detailTitle = document.getElementById("detail-title");
+      const detailBody = document.getElementById("detail-body");
+      const queryEl = document.getElementById("query");
+
+      async function loadStats() {
+        const response = await fetch("/corpus/stats");
+        const stats = await response.json();
+        statsEl.textContent = `${stats.document_count} documents, ${stats.atom_count} atoms, ${stats.edge_count} edges`;
+      }
+
+      async function runSearch() {
+        hitsEl.innerHTML = "Searching...";
+        const response = await fetch("/query-corpus", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: queryEl.value, top_k: 8 })
+        });
+        const data = await response.json();
+        if (!data.hits.length) {
+          hitsEl.textContent = "No hits found.";
+          return;
+        }
+        hitsEl.innerHTML = data.hits.map(hit => `
+          <article class="hit">
+            <h3><a href="#" data-doc="${hit.doc_id}">${hit.doc_id}</a></h3>
+            <div class="meta">score ${hit.score} | pages ${hit.page_count} | support pages ${hit.support_pages.join(", ")}</div>
+            <p>${hit.snippet}</p>
+            <div class="labels">${hit.top_structure_labels.map(label => `<span>${label}</span>`).join("")}</div>
+          </article>
+        `).join("");
+
+        hitsEl.querySelectorAll("a[data-doc]").forEach(link => {
+          link.addEventListener("click", async (event) => {
+            event.preventDefault();
+            await loadDetail(link.dataset.doc);
+          });
+        });
+      }
+
+      async function loadDetail(docId) {
+        const response = await fetch(`/corpus/document/${docId}`);
+        const detail = await response.json();
+        detailTitle.textContent = `${detail.doc_id}`;
+        detailBody.innerHTML = `
+          <div class="meta">${detail.source_path}</div>
+          <div class="meta">pages ${detail.page_count} | atoms ${detail.atom_count} | edges ${detail.edge_count}</div>
+          <ol class="support">
+            ${detail.sample_atoms.map(atom => `
+              <li>
+                <strong>p${atom.page}</strong> [${atom.role_label || atom.atom_type}] ${atom.text}
+              </li>
+            `).join("")}
+          </ol>
+        `;
+      }
+
+      document.getElementById("run").addEventListener("click", runSearch);
+      queryEl.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") runSearch();
+      });
+
+      loadStats().then(runSearch);
+    </script>
+  </body>
+</html>

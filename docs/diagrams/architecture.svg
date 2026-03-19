@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420">
+  <style>
+    .box { fill:#f8f5ef; stroke:#23313f; stroke-width:2; rx:14; ry:14; }
+    .accent { fill:#d9efe3; }
+    .warn { fill:#f7e2d6; }
+    .text { font: 16px Helvetica, Arial, sans-serif; fill:#23313f; }
+    .small { font: 14px Helvetica, Arial, sans-serif; fill:#23313f; }
+    .line { stroke:#23313f; stroke-width:2; fill:none; marker-end:url(#arrow); }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0,0 10,4 0,8" fill="#23313f"/>
+    </marker>
+  </defs>
+  <rect width="1280" height="420" fill="#fffdf9"/>
+  <rect class="box" x="30" y="150" width="140" height="60"/>
+  <text class="text" x="58" y="187">Input Documents</text>
+  <rect class="box accent" x="210" y="150" width="165" height="60"/>
+  <text class="text" x="234" y="187">Multi-Parser Ingestion</text>
+  <rect class="box" x="415" y="150" width="180" height="60"/>
+  <text class="text" x="437" y="187">Evidence Atom Normalizer</text>
+  <rect class="box" x="635" y="150" width="165" height="60"/>
+  <text class="text" x="660" y="187">Evidence Graph Builder</text>
+  <rect class="box" x="840" y="150" width="175" height="60"/>
+  <text class="text" x="858" y="187">Index Manager</text>
+  <rect class="box accent" x="510" y="285" width="160" height="60"/>
+  <text class="text" x="529" y="322">Query Router</text>
+  <rect class="box" x="720" y="285" width="190" height="60"/>
+  <text class="text" x="737" y="322">Context Program</text>
+  <rect class="box" x="1045" y="110" width="180" height="60"/>
+  <text class="text" x="1061" y="147">Graph + Semantic</text>
+  <text class="small" x="1105" y="165">Retrieval</text>
+  <rect class="box" x="1045" y="220" width="180" height="60"/>
+  <text class="text" x="1062" y="257">Generator / Extractor</text>
+  <rect class="box accent" x="1045" y="320" width="180" height="60"/>
+  <text class="text" x="1072" y="357">Verification Engine</text>
+  <rect class="box warn" x="870" y="320" width="140" height="60"/>
+  <text class="text" x="893" y="357">Selective Reprocessing</text>
+  <path class="line" d="M170 180 H210"/>
+  <path class="line" d="M375 180 H415"/>
+  <path class="line" d="M595 180 H635"/>
+  <path class="line" d="M800 180 H840"/>
+  <path class="line" d="M1015 180 H1045"/>
+  <path class="line" d="M1135 170 V220"/>
+  <path class="line" d="M1135 280 V320"/>
+  <path class="line" d="M1045 350 H1010"/>
+  <path class="line" d="M870 350 H505 V210"/>
+  <path class="line" d="M670 315 H720"/>
+  <path class="line" d="M910 315 H1045"/>
+  <path class="line" d="M928 210 V110"/>
+  <text class="text" x="370" y="310">Task Input / Query</text>
+  <path class="line" d="M485 315 H510"/>
+  <text class="small" x="1048" y="400">Output: answer, JSON, evidence trace</text>
+</svg>

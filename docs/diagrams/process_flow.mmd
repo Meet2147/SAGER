@@ -1,0 +1,18 @@
+flowchart TD
+    A["Receive document"] --> B["Run OCR, layout, VLM, table parsers"]
+    B --> C["Normalize parser outputs into evidence atoms"]
+    C --> D["Add metadata: coordinates, role, confidence, provenance"]
+    D --> E["Construct evidence graph"]
+    E --> F["Build semantic, structural, and spatial indexes"]
+    F --> G["Receive task input"]
+    G --> H["Predict task type and evidence requirements"]
+    H --> I["Generate context assembly program"]
+    I --> J["Retrieve and traverse evidence graph"]
+    J --> K["Assemble task-specific context"]
+    K --> L["Generate answer or extraction"]
+    L --> M["Verify against support subgraph"]
+    M --> N{"Adequate support?"}
+    N -- "Yes" --> O["Return supported output"]
+    N -- "No" --> P["Select uncertain pages / regions"]
+    P --> Q["Reprocess with alternate configuration"]
+    Q --> E

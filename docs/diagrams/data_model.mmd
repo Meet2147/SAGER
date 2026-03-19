@@ -1,0 +1,48 @@
+classDiagram
+    class Document {
+      id
+      metadata
+      source_uri
+    }
+    class Page {
+      page_number
+      width
+      height
+    }
+    class ParserRun {
+      parser_type
+      parser_version
+      confidence_profile
+    }
+    class EvidenceAtom {
+      atom_id
+      atom_type
+      content
+      coordinates
+      reading_order
+      confidence
+      role_label
+      embedding_ref
+    }
+    class Edge {
+      edge_type
+      weight
+    }
+    class ContextProgram {
+      task_type
+      traversal_policy
+      ranking_policy
+      verification_policy
+    }
+    class SupportSubgraph {
+      support_score
+      consistency_score
+      provenance_score
+    }
+    Document --> Page
+    Document --> ParserRun
+    Page --> EvidenceAtom
+    ParserRun --> EvidenceAtom
+    EvidenceAtom --> Edge
+    ContextProgram --> SupportSubgraph
+    SupportSubgraph --> EvidenceAtom
