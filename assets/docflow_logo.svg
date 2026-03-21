@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="docflowBlue" x1="18%" y1="8%" x2="82%" y2="92%">
+      <stop offset="0%" stop-color="#5fb4ff"/>
+      <stop offset="100%" stop-color="#2459ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="52" fill="#ffffff"/>
+  <rect x="8" y="8" width="240" height="240" rx="44" fill="none" stroke="#dbe8ff" stroke-width="8"/>
+  <path d="M74 44h60c45 0 80 34 80 78s-35 78-80 78H89c-22 0-39-17-39-39v-83c0-19 16-34 35-34h28c7 0 13 6 13 13s-6 13-13 13H85c-5 0-9 4-9 8v18h44c7 0 13 6 13 13s-6 13-13 13H76v20h44c7 0 13 6 13 13s-6 13-13 13H76v11c0 7 6 13 13 13h45c30 0 54-23 54-52s-24-52-54-52H74c-7 0-13-6-13-13s6-13 13-13z" fill="url(#docflowBlue)"/>
+  <circle cx="61" cy="178" r="14" fill="url(#docflowBlue)"/>
+</svg>
