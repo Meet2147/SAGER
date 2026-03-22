@@ -1,0 +1,35 @@
+name: document_conversion
+flow_type: conversion
+variables:
+  dataset_name: conversion_demo
+  output_dir: docflow_runs/conversion
+
+nodes:
+  - name: scan
+    step: scan_documents
+    config:
+      source_dir: ${inputs.source_dir}
+      file_types: [pdf, docx, doc, xlsx, xls, msg]
+
+  - name: parse
+    step: parse_documents
+    depends_on: [scan]
+    config:
+      dataset_name: ${dataset_name}
+
+  - name: normalize
+    step: normalize_atoms
+    depends_on: [parse]
+
+  - name: metadata
+    step: enrich_metadata
+    depends_on: [normalize]
+
+  - name: write
+    step: write_outputs
+    depends_on: [metadata]
+    config:
+      output_dir: ${output_dir}
+
+outputs:
+  final_node: write

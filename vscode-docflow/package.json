@@ -1,0 +1,89 @@
+{
+  "name": "docflow-visualizer",
+  "displayName": "DocFlow",
+  "description": "Visualize and run DocFlow flow.dag.yaml files inside VS Code.",
+  "version": "0.1.6",
+  "publisher": "mjethwa-streamlit",
+  "icon": "resources/docflow.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Meet2147/SAGER.git"
+  },
+  "keywords": [
+    "docflow",
+    "documents",
+    "workflow",
+    "yaml",
+    "visualizer"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:docflow.createFlow",
+    "onCommand:docflow.visualizeFlow",
+    "onCommand:docflow.visualizeActiveFlow"
+  ],
+  "main": "./extension.js",
+  "files": [
+    "extension.js",
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "resources/**"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "docflow.createFlow",
+        "title": "DocFlow: Create New Flow"
+      },
+      {
+        "command": "docflow.visualizeFlow",
+      "title": "DocFlow: Open Visual Editor"
+      },
+      {
+        "command": "docflow.visualizeActiveFlow",
+        "title": "DocFlow: Open Visual Editor For Active Flow"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "docflow.createFlow",
+          "group": "navigation"
+        },
+        {
+          "command": "docflow.visualizeFlow",
+          "when": "resourceFilename =~ /.*\\.flow\\.(dag|flex)\\.ya?ml$/",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "docflow.visualizeActiveFlow",
+          "when": "resourceFilename =~ /.*\\.flow\\.(dag|flex)\\.ya?ml$/",
+          "group": "navigation"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "docflow-yaml",
+        "aliases": [
+          "DocFlow YAML"
+        ],
+        "extensions": [
+          ".flow.dag.yaml",
+          ".flow.dag.yml",
+          ".flow.flex.yaml",
+          ".flow.flex.yml"
+        ]
+      }
+    ]
+  }
+}

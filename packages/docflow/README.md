@@ -97,6 +97,7 @@ docflow graph document_preprocess.flow.dag.yaml
 
 ```yaml
 name: document_preprocess
+flow_type: standard
 variables:
   dataset_name: docflow_demo
   output_dir: docflow_runs/demo
@@ -139,6 +140,28 @@ nodes:
 outputs:
   final_node: write
 ```
+
+## Flow Types
+
+DocFlow supports explicit flow categorization with `flow_type`.
+
+Recommended first-class types:
+
+- `standard`
+- `extraction`
+- `indexing`
+- `conversion`
+- `evaluation`
+
+DocFlow also supports orchestration styles:
+
+- `dag`
+- `flex`
+
+If `orchestration` is not set, it is inferred from the filename:
+
+- `*.flow.dag.yaml`
+- `*.flow.flex.yaml`
 
 ## Output Structure
 

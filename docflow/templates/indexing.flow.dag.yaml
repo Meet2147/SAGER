@@ -1,0 +1,43 @@
+name: document_indexing
+flow_type: indexing
+variables:
+  dataset_name: indexing_demo
+  output_dir: docflow_runs/indexing
+
+nodes:
+  - name: scan
+    step: scan_documents
+    config:
+      source_dir: ${inputs.source_dir}
+      file_types: [pdf, docx, doc, xlsx, xls, msg]
+
+  - name: parse
+    step: parse_documents
+    depends_on: [scan]
+    config:
+      dataset_name: ${dataset_name}
+
+  - name: normalize
+    step: normalize_atoms
+    depends_on: [parse]
+
+  - name: metadata
+    step: enrich_metadata
+    depends_on: [normalize]
+
+  - name: graph
+    step: build_evidence_graph
+    depends_on: [metadata]
+
+  - name: indexes
+    step: build_indexes
+    depends_on: [graph]
+
+  - name: write
+    step: write_outputs
+    depends_on: [graph, indexes]
+    config:
+      output_dir: ${output_dir}
+
+outputs:
+  final_node: write
