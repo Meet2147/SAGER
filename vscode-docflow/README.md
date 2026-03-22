@@ -6,9 +6,9 @@ It lets you open `*.flow.dag.yaml` and `*.flow.flex.yaml` files, inspect their n
 
 ## Demo
 
-![DocFlow visual editor](./media/docflow-editor.png)
+[![DocFlow visual editor](https://raw.githubusercontent.com/Meet2147/SAGER/main/vscode-docflow/media/docflow-editor.png)](https://raw.githubusercontent.com/Meet2147/SAGER/main/vscode-docflow/media/docflow-demo.mp4)
 
-[Watch the demo video](./media/docflow-demo.mp4)
+[Watch the demo video](https://raw.githubusercontent.com/Meet2147/SAGER/main/vscode-docflow/media/docflow-demo.mp4)
 
 ## What You Can Do
 
@@ -90,10 +90,10 @@ If a flow fails, errors are surfaced in:
 
 ## Development
 
-1. Open [/Users/meetjethwa/Development/PatentIdeas/DocIntelligence/vscode-docflow](/Users/meetjethwa/Development/PatentIdeas/DocIntelligence/vscode-docflow) in VS Code.
+1. Open the `vscode-docflow` folder in VS Code.
 2. Press `F5`.
 3. In the Extension Development Host, open a sample flow such as:
-   [/Users/meetjethwa/Development/PatentIdeas/DocIntelligence/docflow/examples/document_preprocess.flow.dag.yaml](/Users/meetjethwa/Development/PatentIdeas/DocIntelligence/docflow/examples/document_preprocess.flow.dag.yaml)
+   `docflow/examples/document_preprocess.flow.dag.yaml`
 4. Run:
    `DocFlow: Open Visual Editor For Active Flow`
 

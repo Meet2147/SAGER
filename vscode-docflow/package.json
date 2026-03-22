@@ -2,7 +2,7 @@
   "name": "docflow-visualizer",
   "displayName": "DocFlow",
   "description": "Visualize and run DocFlow flow.dag.yaml files inside VS Code.",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "publisher": "mjethwa-streamlit",
   "icon": "resources/docflow.png",
   "repository": {
